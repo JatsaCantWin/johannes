@@ -8,4 +8,7 @@ public class MaterialModel
     public int MaterialID { get; set; }
     
     public string Name { get; set; }
+    
+    public PrinterMaterial Printer { get; set; }
+    public OrderMaterial Order { get; set; }
 }
