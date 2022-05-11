@@ -43,6 +43,23 @@
     color: #FFFFFF;
 }
 
+input[type=text] {
+
+  background-color: #d8d8d8;
+  color: pink;
+  
+
+  width: 10%;
+  padding: 12px 20px;
+  margin: 8px 0;
+  box-sizing: border-box;
+}
+
+.printer_name{
+  width: 100%;
+}
+
+
 /*
 
 
