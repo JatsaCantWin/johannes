@@ -2,9 +2,9 @@
 
 #nullable disable
 
-namespace JohannesWebApplication.Migrations
+namespace JohannesWebApplication.Data.Migrations
 {
-    public partial class AddOrderFix : Migration
+    public partial class RemovedWrongContext : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {

@@ -1,16 +1,20 @@
 ﻿using System.Diagnostics;
+using JohannesWebApplication.Data;
 using Microsoft.AspNetCore.Mvc;
 using JohannesWebApplication.Models;
+using Microsoft.EntityFrameworkCore;
 
 namespace JohannesWebApplication.Controllers;
 
 public class HomeController : Controller
 {
     private readonly ILogger<HomeController> _logger;
+    private readonly ApplicationDbContext _context;
 
-    public HomeController(ILogger<HomeController> logger)
+    public HomeController(ILogger<HomeController> logger, ApplicationDbContext context)
     {
         _logger = logger;
+        _context = context;
     }
 
     public IActionResult Index()
@@ -18,7 +22,7 @@ public class HomeController : Controller
         return View();
     }
 
-    public IActionResult Privacy()
+    public IActionResult RegisterPrinter()
     {
         return View();
     }
@@ -27,5 +31,10 @@ public class HomeController : Controller
     public IActionResult Error()
     {
         return View(new ErrorViewModel {RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier});
+    }
+
+    public IActionResult FormRegisterPrinter(Models.PrinterModel sm)
+    {
+        return RegisterPrinter();
     }
 }
