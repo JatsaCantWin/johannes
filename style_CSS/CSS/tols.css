@@ -46,10 +46,23 @@
 input[type=text] {
 
   background-color: #d8d8d8;
-  color: pink;
+  color: rgb(255, 93, 120);
   
 
   width: 10%;
+  padding: 12px 20px;
+  margin: 8px 0;
+  box-sizing: border-box;
+}
+
+
+input[type=password] {
+
+  background-color: #d8d8d8;
+  color: rgb(255, 93, 120);
+  
+
+  width: 80%;
   padding: 12px 20px;
   margin: 8px 0;
   box-sizing: border-box;
