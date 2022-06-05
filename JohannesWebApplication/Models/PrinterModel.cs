@@ -13,5 +13,5 @@ public class PrinterModel
     public int SizeZ { get; set; }
     public string? Description { get; set; }
     
-    public PrinterMaterial Material { get; set; }
+    public PrinterMaterial? Material { get; set; }
 }

@@ -9,7 +9,7 @@ public class OrderModel
     
     public float Infill { get; set; }
     public string FilePath { get; set; }
-    
+
     public OrderMaterial Material { get; set; }
     public OrderConversation Conversation { get; set; }
 }
