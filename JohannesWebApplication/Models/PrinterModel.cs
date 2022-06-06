@@ -4,6 +4,11 @@ namespace JohannesWebApplication.Models;
 
 public class PrinterModel
 {
+    public PrinterModel()
+    {
+        ApplicationUsers = new List<ApplicationUser>();
+    }
+    
     [Key]
     public int PrinterID { get; set; }
     
@@ -14,4 +19,5 @@ public class PrinterModel
     public string? Description { get; set; }
     
     public PrinterMaterial? Material { get; set; }
+    public ICollection<ApplicationUser> ApplicationUsers { get; set; }
 }

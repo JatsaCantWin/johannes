@@ -7,5 +7,10 @@ namespace JohannesWebApplication.Models;
 
 public class ApplicationUser : IdentityUser
 {
-    public virtual ICollection<UserPrinter> UserPrinters { get; set; }
+    public ApplicationUser()
+    {
+        PrinterModel = new List<PrinterModel>();
+    }
+    
+    public ICollection<PrinterModel> PrinterModel { get; set; }
 }

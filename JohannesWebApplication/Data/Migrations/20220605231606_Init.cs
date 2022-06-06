@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace JohannesWebApplication.Data.Migrations
 {
-    public partial class MovedContext : Migration
+    public partial class Init : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -128,10 +128,20 @@ namespace JohannesWebApplication.Data.Migrations
                 name: "UserPrinters",
                 columns: table => new
                 {
-                    PrinterId = table.Column<int>(type: "INTEGER", nullable: false)
+                    UserPrinterId = table.Column<int>(type: "INTEGER", nullable: false)
+                        .Annotation("Sqlite:Autoincrement", true),
+                    PrinterId = table.Column<int>(type: "INTEGER", nullable: false),
+                    ApplicationUserId = table.Column<string>(type: "TEXT", nullable: false)
                 },
                 constraints: table =>
                 {
+                    table.PrimaryKey("PK_UserPrinters", x => x.UserPrinterId);
+                    table.ForeignKey(
+                        name: "FK_UserPrinters_AspNetUsers_ApplicationUserId",
+                        column: x => x.ApplicationUserId,
+                        principalTable: "AspNetUsers",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
                         name: "FK_UserPrinters_Printers_PrinterId",
                         column: x => x.PrinterId,
@@ -195,6 +205,11 @@ namespace JohannesWebApplication.Data.Migrations
                 table: "PrinterMaterial",
                 column: "PrinterId",
                 unique: true);
+
+            migrationBuilder.CreateIndex(
+                name: "IX_UserPrinters_ApplicationUserId",
+                table: "UserPrinters",
+                column: "ApplicationUserId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_UserPrinters_PrinterId",

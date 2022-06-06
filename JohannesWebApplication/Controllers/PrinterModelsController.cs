@@ -7,16 +7,20 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using JohannesWebApplication.Data;
 using JohannesWebApplication.Models;
+using Microsoft.AspNetCore.Identity;
+using SQLitePCL;
 
 namespace JohannesWebApplication.Controllers
 {
     public class PrinterModelsController : Controller
     {
         private readonly ApplicationDbContext _context;
+        private readonly UserManager<ApplicationUser> _userManager;
 
-        public PrinterModelsController(ApplicationDbContext context)
+        public PrinterModelsController(ApplicationDbContext context, UserManager<ApplicationUser> userManager)
         {
             _context = context;
+            _userManager = userManager;
         }
 
         // GET: PrinterModels
@@ -25,23 +29,6 @@ namespace JohannesWebApplication.Controllers
               return _context.Printers != null ? 
                           View(await _context.Printers.ToListAsync()) :
                           Problem("Entity set 'ApplicationDbContext.Printers'  is null.");
-        }
-
-        public async Task<IActionResult> AddPrinter(int id)
-        {
-            var printerModel = await _context.Printers
-                .FirstOrDefaultAsync(m => m.PrinterID == id);
-
-            UserPrinter userPrinter = new UserPrinter
-            {
-                UserPrinterId = User.GetHashCode(),
-                PrinterId = id
-            };
-
-            _context.Add(userPrinter);
-            await _context.SaveChangesAsync();
-
-            return View(printerModel);
         }
 
         // GET: PrinterModels/Details/5
@@ -175,6 +162,26 @@ namespace JohannesWebApplication.Controllers
         private bool PrinterModelExists(int id)
         {
           return (_context.Printers?.Any(e => e.PrinterID == id)).GetValueOrDefault();
+        }
+        
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> AddPrinter(int id)
+        {
+            var printerModel = await _context.Printers
+                .FirstOrDefaultAsync(m => m.PrinterID == id);
+            var applicationUser = await _userManager.GetUserAsync(HttpContext.User);
+            
+            applicationUser.PrinterModel.Add(printerModel);
+            
+            await _context.SaveChangesAsync();
+            return RedirectToAction(nameof(Index));
+        }
+
+        public bool CurrentUserHasPrinter(PrinterModel model)
+        {
+            var applicationUser = _userManager.GetUserId(HttpContext.User); 
+            return (_context.Printers?.Find(model.PrinterID) == null);
         }
     }
 }

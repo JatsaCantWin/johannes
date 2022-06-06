@@ -4,11 +4,10 @@ using Microsoft.EntityFrameworkCore;
 
 namespace JohannesWebApplication.Data;
 
-public class ApplicationDbContext : IdentityDbContext
+public class ApplicationDbContext : IdentityDbContext<ApplicationUser>
 {
     public DbSet<PrinterModel> Printers { get; set; }
     public DbSet<MaterialModel> Materials { get; set; }
-    public DbSet<UserPrinter> UserPrinters { get; set; }
     public DbSet<OrderModel> Orders { get; set; }
     public DbSet<ApplicationUser> ApplicationUsers { get; set; }
     public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options)
@@ -19,5 +18,9 @@ public class ApplicationDbContext : IdentityDbContext
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         base.OnModelCreating(modelBuilder);
+
+        modelBuilder.Entity<ApplicationUser>()
+            .HasMany(t => t.PrinterModel)
+            .WithMany(t => t.ApplicationUsers);
     }
 }
