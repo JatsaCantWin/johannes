@@ -16,7 +16,7 @@
                 @Html.DisplayNameFor(model => model.Infill)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.FilePath)
+                @Html.DisplayNameFor(model => model.PrintFilePath)
             </th>
             <th></th>
         </tr>
@@ -28,7 +28,7 @@
                 @Html.DisplayFor(modelItem => item.Infill)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.FilePath)
+                @Html.DisplayFor(modelItem => item.PrintFilePath)
             </td>
             <td>
                 <a asp-action="Edit" asp-route-id="@item.PrinterID">Edit</a> |

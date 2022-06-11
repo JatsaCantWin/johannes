@@ -1,4 +1,4 @@
-﻿@model JohannesWebApplication.Models.OrderModel
+﻿@model JohannesWebApplication.Models.OrderModelVM
 
 @{
     ViewData["Title"] = "Create";
@@ -10,7 +10,7 @@
 <hr />
 <div class="row">
     <div class="col-md-4">
-        <form asp-action="Create">
+        <form asp-action="Create" enctype="multipart/form-data">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <div class="form-group">
                 <label asp-for="Infill" class="control-label"></label>
@@ -18,8 +18,9 @@
                 <span asp-validation-for="Infill" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label name="orderFile" class="control-label"></label>
-                <input type="file" name="orderFile">
+                <label asp-for="PrintFile" class="control-label"></label>
+                <input asp-for="PrintFile" type="file">
+                <span asp-validation-for="PrintFile" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <input type="submit" value="Create" class="btn btn-primary" />

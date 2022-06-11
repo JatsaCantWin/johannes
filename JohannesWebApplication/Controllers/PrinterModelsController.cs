@@ -38,14 +38,19 @@ namespace JohannesWebApplication.Controllers
             {
                 return NotFound();
             }
-
+            
             var printerModel = await _context.Printers
-                .FirstOrDefaultAsync(m => m.PrinterID == id);
+                .Include("ApplicationUsers").FirstOrDefaultAsync(m => m.PrinterID == id);
             if (printerModel == null)
             {
                 return NotFound();
             }
 
+            var applicationUser = await _userManager.GetUserAsync(HttpContext.User);
+            
+            if (printerModel.ApplicationUsers.Contains(applicationUser))
+                ViewData["PrinterAdded"] = "True";
+            
             return View(printerModel);
         }
 
@@ -173,15 +178,10 @@ namespace JohannesWebApplication.Controllers
             var applicationUser = await _userManager.GetUserAsync(HttpContext.User);
             
             applicationUser.PrinterModel.Add(printerModel);
+            printerModel.ApplicationUsers.Add(applicationUser);
             
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
-        }
-
-        public bool CurrentUserHasPrinter(PrinterModel model)
-        {
-            var applicationUser = _userManager.GetUserId(HttpContext.User); 
-            return (_context.Printers?.Find(model.PrinterID) == null);
         }
     }
 }

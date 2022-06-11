@@ -180,12 +180,12 @@ namespace JohannesWebApplication.Data.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("INTEGER");
 
-                    b.Property<string>("FilePath")
-                        .IsRequired()
-                        .HasColumnType("TEXT");
-
                     b.Property<float>("Infill")
                         .HasColumnType("REAL");
+
+                    b.Property<string>("PrintFilePath")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
 
                     b.HasKey("PrinterID");
 

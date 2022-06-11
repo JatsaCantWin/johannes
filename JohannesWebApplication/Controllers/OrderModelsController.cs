@@ -56,21 +56,28 @@ namespace JohannesWebApplication.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("PrinterID,Infill,FilePath")] OrderModel orderModel, IFormFile orderFile)
+        public async Task<IActionResult> Create([Bind("Infill, PrintFile")] OrderModelVM orderModelVM)
         {
-            var filePath = Path.GetTempFileName();
+            
+            var filePath = "/Files/Order" + Path.GetRandomFileName() + Path.GetExtension(orderModelVM.PrintFile.FileName);
+            var infill = orderModelVM.Infill;
+
             using (var stream = System.IO.File.Create(filePath))
             {
-                await orderFile.CopyToAsync(stream);
+                await orderModelVM.PrintFile.CopyToAsync(stream);
             }
-            orderModel.FilePath = filePath;
+            
+            OrderModel orderModel = new OrderModel();
+            orderModel.PrintFilePath = filePath;
+            orderModel.Infill = infill;
+            
             if (ModelState.IsValid)
             {
                 _context.Add(orderModel);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            return View(orderModel);
+            return View(orderModelVM);
         }
 
         // GET: OrderModels/Edit/5

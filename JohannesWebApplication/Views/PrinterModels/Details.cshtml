@@ -46,7 +46,10 @@
 <div>
     <a asp-action="Edit" asp-route-id="@Model?.PrinterID">Edit</a> |
     <a asp-action="Index">Back to List</a> |
-    <form asp-controller="PrinterModels" asp-route-id="@Model?.PrinterID" asp-action="AddPrinter" method="post">
-        <button type="submit" value="Add Printer"></button>
-    </form>
+    @if ((string?) ViewData["PrinterAdded"] != "True")
+    {
+        <form asp-controller="PrinterModels" asp-route-id="@Model?.PrinterID" asp-action="AddPrinter" method="post">
+            <button type="submit" value="Add Printer"></button>
+        </form>
+    }
 </div>
