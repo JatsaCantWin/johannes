@@ -12,16 +12,31 @@
     <div class="col-md-4">
         <form asp-action="Edit">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <input type="hidden" asp-for="PrinterID" />
+            <input type="hidden" asp-for="OrderId" />
+            <div class="form-group">
+                <label asp-for="Name" class="control-label"></label>
+                <input asp-for="Name" class="form-control" />
+                <span asp-validation-for="Name" class="text-danger"></span>
+            </div>
             <div class="form-group">
                 <label asp-for="Infill" class="control-label"></label>
                 <input asp-for="Infill" class="form-control" />
                 <span asp-validation-for="Infill" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="PrintFilePath" class="control-label"></label>
-                <input asp-for="PrintFilePath" class="form-control" />
-                <span asp-validation-for="PrintFilePath" class="text-danger"></span>
+                <label asp-for="SizeX" class="control-label"></label>
+                <input asp-for="SizeX" class="form-control" />
+                <span asp-validation-for="SizeX" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="SizeY" class="control-label"></label>
+                <input asp-for="SizeY" class="form-control" />
+                <span asp-validation-for="SizeY" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="SizeZ" class="control-label"></label>
+                <input asp-for="SizeZ" class="form-control" />
+                <span asp-validation-for="SizeZ" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <input type="submit" value="Save" class="btn btn-primary" />

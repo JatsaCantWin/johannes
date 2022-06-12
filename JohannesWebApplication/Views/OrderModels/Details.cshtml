@@ -11,20 +11,58 @@
     <hr />
     <dl class="row">
         <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.Name)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.Name)
+        </dd>
+        
+        <dt class="col-sm-2">
             @Html.DisplayNameFor(model => model.Infill)
         </dt>
-        <dd class = "col-sm-10">
+        <dd class="col-sm-10">
             @Html.DisplayFor(model => model.Infill)
         </dd>
-        <dt class = "col-sm-2">
+        <dt class="col-sm-2">
             @Html.DisplayNameFor(model => model.PrintFilePath)
         </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.PrintFilePath)
+        <dd class="col-sm-10">
+            <a asp-action="DownloadFile" asp-route-id="@Model?.OrderId">Download File</a>
         </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.SizeX)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.SizeX)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.SizeY)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.SizeY)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.SizeZ)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.SizeZ)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Commisioner)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Commisioner.UserName)
+        </dd>
+
     </dl>
 </div>
 <div>
-    <a asp-action="Edit" asp-route-id="@Model?.PrinterID">Edit</a> |
+    <a asp-action="Edit" asp-route-id="@Model?.OrderId">Edit</a> |
     <a asp-action="Index">Back to List</a>
+    @if ((string?) ViewData["CanTakePrinter"] == "True")
+        {
+            <form asp-controller="OrderModels" asp-route-id="@Model?.OrderId" asp-action="TakeOrder" method="post">
+                <button type="submit" value="Take comission"></button>
+            </form>
+        }
 </div>

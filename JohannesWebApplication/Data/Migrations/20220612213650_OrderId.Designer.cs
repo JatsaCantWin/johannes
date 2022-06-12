@@ -3,6 +3,7 @@ using System;
 using JohannesWebApplication.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -10,27 +11,13 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace JohannesWebApplication.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20220612213650_OrderId")]
+    partial class OrderId
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder.HasAnnotation("ProductVersion", "6.0.5");
-
-            modelBuilder.Entity("ApplicationUserOrderModel", b =>
-                {
-                    b.Property<int>("PotentialCommisionsOrderId")
-                        .HasColumnType("INTEGER");
-
-                    b.Property<string>("PotentialExecutionersId")
-                        .HasColumnType("TEXT");
-
-                    b.HasKey("PotentialCommisionsOrderId", "PotentialExecutionersId");
-
-                    b.HasIndex("PotentialExecutionersId");
-
-                    b.ToTable("ApplicationUserOrderModel");
-                });
 
             modelBuilder.Entity("ApplicationUserPrinterModel", b =>
                 {
@@ -195,38 +182,14 @@ namespace JohannesWebApplication.Data.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("INTEGER");
 
-                    b.Property<string>("CommisionExecutionerId")
-                        .HasColumnType("TEXT");
-
-                    b.Property<string>("CommisionerId")
-                        .IsRequired()
-                        .HasColumnType("TEXT");
-
                     b.Property<float>("Infill")
                         .HasColumnType("REAL");
-
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasColumnType("TEXT");
 
                     b.Property<string>("PrintFilePath")
                         .IsRequired()
                         .HasColumnType("TEXT");
 
-                    b.Property<int>("SizeX")
-                        .HasColumnType("INTEGER");
-
-                    b.Property<int>("SizeY")
-                        .HasColumnType("INTEGER");
-
-                    b.Property<int>("SizeZ")
-                        .HasColumnType("INTEGER");
-
                     b.HasKey("OrderId");
-
-                    b.HasIndex("CommisionExecutionerId");
-
-                    b.HasIndex("CommisionerId");
 
                     b.ToTable("Orders");
                 });
@@ -413,21 +376,6 @@ namespace JohannesWebApplication.Data.Migrations
                     b.ToTable("AspNetUserTokens", (string)null);
                 });
 
-            modelBuilder.Entity("ApplicationUserOrderModel", b =>
-                {
-                    b.HasOne("JohannesWebApplication.Models.OrderModel", null)
-                        .WithMany()
-                        .HasForeignKey("PotentialCommisionsOrderId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("JohannesWebApplication.Models.ApplicationUser", null)
-                        .WithMany()
-                        .HasForeignKey("PotentialExecutionersId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-                });
-
             modelBuilder.Entity("ApplicationUserPrinterModel", b =>
                 {
                     b.HasOne("JohannesWebApplication.Models.ApplicationUser", null)
@@ -482,23 +430,6 @@ namespace JohannesWebApplication.Data.Migrations
                     b.Navigation("Material");
 
                     b.Navigation("Order");
-                });
-
-            modelBuilder.Entity("JohannesWebApplication.Models.OrderModel", b =>
-                {
-                    b.HasOne("JohannesWebApplication.Models.ApplicationUser", "CommisionExecutioner")
-                        .WithMany("CommissionsTaken")
-                        .HasForeignKey("CommisionExecutionerId");
-
-                    b.HasOne("JohannesWebApplication.Models.ApplicationUser", "Commisioner")
-                        .WithMany("CommissionsPut")
-                        .HasForeignKey("CommisionerId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("CommisionExecutioner");
-
-                    b.Navigation("Commisioner");
                 });
 
             modelBuilder.Entity("JohannesWebApplication.Models.PrinterMaterial", b =>
@@ -569,13 +500,6 @@ namespace JohannesWebApplication.Data.Migrations
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
-                });
-
-            modelBuilder.Entity("JohannesWebApplication.Models.ApplicationUser", b =>
-                {
-                    b.Navigation("CommissionsPut");
-
-                    b.Navigation("CommissionsTaken");
                 });
 
             modelBuilder.Entity("JohannesWebApplication.Models.MaterialModel", b =>

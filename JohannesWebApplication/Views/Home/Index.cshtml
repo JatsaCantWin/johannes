@@ -15,5 +15,7 @@
         <form asp-area="Identity" asp-page="/Account/Logout" asp-route-returnUrl="@Url.Action("Index", "Home", new {area = ""})">
             <button type="submit">Logout</button>
         </form>
+        <a asp-controller="OrderModels" asp-action="Index">Orders</a>
+        <a asp-controller="PrinterModels" asp-action="Index">Printers</a>
     }
 </div>

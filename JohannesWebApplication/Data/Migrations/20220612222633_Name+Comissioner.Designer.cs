@@ -3,6 +3,7 @@ using System;
 using JohannesWebApplication.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -10,27 +11,13 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace JohannesWebApplication.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20220612222633_Name+Comissioner")]
+    partial class NameComissioner
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder.HasAnnotation("ProductVersion", "6.0.5");
-
-            modelBuilder.Entity("ApplicationUserOrderModel", b =>
-                {
-                    b.Property<int>("PotentialCommisionsOrderId")
-                        .HasColumnType("INTEGER");
-
-                    b.Property<string>("PotentialExecutionersId")
-                        .HasColumnType("TEXT");
-
-                    b.HasKey("PotentialCommisionsOrderId", "PotentialExecutionersId");
-
-                    b.HasIndex("PotentialExecutionersId");
-
-                    b.ToTable("ApplicationUserOrderModel");
-                });
 
             modelBuilder.Entity("ApplicationUserPrinterModel", b =>
                 {
@@ -411,21 +398,6 @@ namespace JohannesWebApplication.Data.Migrations
                     b.HasKey("UserId", "LoginProvider", "Name");
 
                     b.ToTable("AspNetUserTokens", (string)null);
-                });
-
-            modelBuilder.Entity("ApplicationUserOrderModel", b =>
-                {
-                    b.HasOne("JohannesWebApplication.Models.OrderModel", null)
-                        .WithMany()
-                        .HasForeignKey("PotentialCommisionsOrderId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("JohannesWebApplication.Models.ApplicationUser", null)
-                        .WithMany()
-                        .HasForeignKey("PotentialExecutionersId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
                 });
 
             modelBuilder.Entity("ApplicationUserPrinterModel", b =>

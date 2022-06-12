@@ -22,5 +22,14 @@ public class ApplicationDbContext : IdentityDbContext<ApplicationUser>
         modelBuilder.Entity<ApplicationUser>()
             .HasMany(t => t.PrinterModel)
             .WithMany(t => t.ApplicationUsers);
+        modelBuilder.Entity<ApplicationUser>()
+            .HasMany(t => t.CommissionsPut)
+            .WithOne(t => t.Commisioner);
+        modelBuilder.Entity<ApplicationUser>()
+            .HasMany(t => t.CommissionsTaken)
+            .WithOne(t => t.CommisionExecutioner);
+        modelBuilder.Entity<ApplicationUser>()
+            .HasMany(t => t.PotentialCommisions)
+            .WithMany(t => t.PotentialExecutioners);
     }
 }
