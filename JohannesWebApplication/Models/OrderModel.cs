@@ -29,7 +29,6 @@ public class OrderModel
     public ICollection<ApplicationUser> PotentialExecutioners { get; set; }
 
     public OrderMaterial Material { get; set; }
-    public OrderConversation Conversation { get; set; }
 }
 
 public class OrderModelVM

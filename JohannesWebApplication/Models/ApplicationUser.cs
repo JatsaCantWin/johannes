@@ -19,4 +19,6 @@ public class ApplicationUser : IdentityUser
     public ICollection<OrderModel> CommissionsPut { get; set; }
     public ICollection<OrderModel> CommissionsTaken { get; set; }
     public ICollection<OrderModel> PotentialCommisions { get; set; }
+
+    public AddressModel? Address;
 }

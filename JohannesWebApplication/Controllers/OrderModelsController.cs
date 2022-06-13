@@ -24,13 +24,29 @@ namespace JohannesWebApplication.Controllers
         }
 
         // GET: OrderModels
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(int? id)
         {
-            var list = await _context.Orders.Include("Commisioner").ToListAsync();
-            list.RemoveAll(m => m.OrderFinalized);
-              return _context.Orders != null ? 
-                          View(list) :
-                          Problem("Entity set 'ApplicationDbContext.Orders'  is null.");
+            var list = await _context.Orders
+                .Include("Commisioner")
+                .Include("Commisioner.Address")
+                .ToListAsync();
+            var applicationUser = await _userManager.GetUserAsync(HttpContext.User);
+            
+            if (id != 2)
+                list.RemoveAll(m => m.OrderFinalized);
+            if (id == 1)
+            {
+                list.RemoveAll(m => m.Commisioner.Address == null);
+                list.RemoveAll(m => m.Commisioner.Address.City != applicationUser.Address.City);
+            }
+            
+            ViewData["Id"] = id.ToString();
+            if (id == null)
+                ViewData["Id"] = "0";
+            
+            return _context.Orders != null ? 
+                      View(list) :
+                      Problem("Entity set 'ApplicationDbContext.Orders'  is null.");
         }
 
         // GET: OrderModels/Details/5
@@ -43,6 +59,7 @@ namespace JohannesWebApplication.Controllers
 
             var orderModel = await _context.Orders
                 .Include("Commisioner")
+                .Include("Commisioner.Address")
                 .FirstOrDefaultAsync(m => m.OrderId == id);
             if (orderModel == null)
             {
@@ -171,6 +188,7 @@ namespace JohannesWebApplication.Controllers
 
             var orderModel = await _context.Orders
                 .Include("Commisioner")
+                .Include("Commisioner.Address")
                 .FirstOrDefaultAsync(m => m.OrderId == id);
             if (orderModel == null)
             {
