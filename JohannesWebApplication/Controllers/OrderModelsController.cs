@@ -31,13 +31,16 @@ namespace JohannesWebApplication.Controllers
                 .Include("Commisioner.Address")
                 .ToListAsync();
             var applicationUser = await _userManager.GetUserAsync(HttpContext.User);
+            var applicationUserDb = await _context.ApplicationUsers
+                .Include("Address")
+                .FirstOrDefaultAsync(u => u.Id == applicationUser.Id);
             
             if (id != 2)
                 list.RemoveAll(m => m.OrderFinalized);
             if (id == 1)
             {
                 list.RemoveAll(m => m.Commisioner.Address == null);
-                list.RemoveAll(m => m.Commisioner.Address.City != applicationUser.Address.City);
+                list.RemoveAll(m => m.Commisioner.Address.City != applicationUserDb.Address.City);
             }
             
             ViewData["Id"] = id.ToString();

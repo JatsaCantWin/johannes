@@ -183,5 +183,19 @@ namespace JohannesWebApplication.Controllers
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
+
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> RemovePrinter(int id)
+        {
+            var printerModel = await _context.Printers
+                .FirstOrDefaultAsync(m => m.PrinterID == id);
+            var applicationUser = await _userManager.GetUserAsync(HttpContext.User);
+            
+            applicationUser.PrinterModel.Remove(printerModel);
+            printerModel.ApplicationUsers.Remove(applicationUser);
+            
+            await _context.SaveChangesAsync();
+            return RedirectToAction(nameof(Index));
+        }
     }
 }

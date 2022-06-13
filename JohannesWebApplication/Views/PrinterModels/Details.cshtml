@@ -1,4 +1,5 @@
 ﻿@using JohannesWebApplication.Controllers
+@using Microsoft.AspNetCore.Identity
 @model JohannesWebApplication.Models.PrinterModel
 
 @{
@@ -50,6 +51,12 @@
     {
         <form asp-controller="PrinterModels" asp-route-id="@Model?.PrinterID" asp-action="AddPrinter" method="post">
             <button type="submit" value="Add Printer"></button>
+        </form>
+    }
+    else
+    {
+        <form asp-controller="PrinterModels" asp-route-id="@Model?.PrinterID" asp-action="RemovePrinter" method="post">
+            <button type="submit" value="Remove Printer"></button>
         </form>
     }
 </div>
