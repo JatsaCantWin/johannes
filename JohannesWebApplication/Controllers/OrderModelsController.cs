@@ -26,8 +26,10 @@ namespace JohannesWebApplication.Controllers
         // GET: OrderModels
         public async Task<IActionResult> Index()
         {
+            var list = await _context.Orders.Include("Commisioner").ToListAsync();
+            list.RemoveAll(m => m.OrderFinalized);
               return _context.Orders != null ? 
-                          View(await _context.Orders.Include("Commisioner").ToListAsync()) :
+                          View(list) :
                           Problem("Entity set 'ApplicationDbContext.Orders'  is null.");
         }
 
@@ -48,7 +50,17 @@ namespace JohannesWebApplication.Controllers
             }
 
             if (await CanTakeCommision(id))
-                ViewData["CanTakePrinter"] = "True";
+                ViewData["CanTakeCommision"] = "True";
+            if (orderModel.CommisionExecutioner != null)
+                ViewData["HasExecutioner"] = "True";
+            if ((await IsOrderOwner(id))&&(ViewData["HasExecutioner"] != "True"))
+                ViewData["DisplayPotentialExecutioners"] = "True";
+            if (await UserIsExecutioner(id))
+                ViewData["UserIsExecutioner"] = "True";
+            if (await UserIsCommisioner(id))
+                ViewData["UserIsCommisioner"] = "True";
+            if (orderModel.OrderSent)
+                ViewData["OrderSent"] = "True";
             
             return View(orderModel);
         }
@@ -237,12 +249,78 @@ namespace JohannesWebApplication.Controllers
         {
             var applicationUser = await _userManager.GetUserAsync(HttpContext.User);
             var orderModel = await _context.Orders
-                .Include("Commisioner")
                 .FirstOrDefaultAsync(m => m.OrderId == id);
             
             applicationUser.PotentialCommisions.Add(orderModel);
             orderModel.PotentialExecutioners.Add(applicationUser);
             
+            await _context.SaveChangesAsync();
+            return RedirectToAction(nameof(Index));
+        }
+        
+        private async Task<bool> IsOrderOwner(int? id)
+        {
+            var applicationUser = await _userManager.GetUserAsync(HttpContext.User);
+            var orderModel = await _context.Orders
+                .Include("Commisioner")
+                .FirstOrDefaultAsync(m => m.OrderId == id);
+
+            return (orderModel.Commisioner == applicationUser);
+        }
+
+        public async Task<IActionResult> AcceptExecutioner(int id, string executionerid)
+        {
+            var orderModel = await _context.Orders
+                .Include("Commisioner")
+                .FirstOrDefaultAsync(m => m.OrderId == id);
+
+            orderModel.CommisionExecutioner = await _context.Users
+                .FirstOrDefaultAsync(m => m.Id == executionerid);
+
+            await _context.SaveChangesAsync();
+            return RedirectToAction(nameof(Index));
+        }
+        
+        private async Task<bool> UserIsExecutioner(int? id)
+        {
+            var applicationUser = await _userManager.GetUserAsync(HttpContext.User);
+            var orderModel = await _context.Orders
+                .Include("CommisionExecutioner")
+                .FirstOrDefaultAsync(m => m.OrderId == id);
+
+            return (orderModel.CommisionExecutioner == applicationUser);
+        }
+        
+        private async Task<bool> UserIsCommisioner(int? id)
+        {
+            var applicationUser = await _userManager.GetUserAsync(HttpContext.User);
+            var orderModel = await _context.Orders
+                .Include("Commisioner")
+                .FirstOrDefaultAsync(m => m.OrderId == id);
+
+            return (orderModel.Commisioner == applicationUser);
+        }
+
+        public async Task<IActionResult> ConfirmSendingOrder(int? id)
+        {
+            var orderModel = await _context.Orders
+                .Include("CommisionExecutioner")
+                .FirstOrDefaultAsync(m => m.OrderId == id);
+
+            orderModel.OrderSent = true;
+
+            await _context.SaveChangesAsync();
+            return RedirectToAction(nameof(Index));
+        }
+        
+        public async Task<IActionResult> ConfirmFinalizingOrder(int? id)
+        {
+            var orderModel = await _context.Orders
+                .Include("CommisionExecutioner")
+                .FirstOrDefaultAsync(m => m.OrderId == id);
+
+            orderModel.OrderFinalized = true;
+
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }

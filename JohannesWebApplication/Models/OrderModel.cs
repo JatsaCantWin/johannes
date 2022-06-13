@@ -21,6 +21,9 @@ public class OrderModel
     public int SizeY { get; set; }
     public int SizeZ { get; set; }
     
+    public bool OrderSent { get; set; }
+    public bool OrderFinalized { get; set; }
+    
     public ApplicationUser Commisioner { get; set; }
     public ApplicationUser? CommisionExecutioner { get; set; }
     public ICollection<ApplicationUser> PotentialExecutioners { get; set; }

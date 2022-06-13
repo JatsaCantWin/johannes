@@ -1,4 +1,5 @@
-﻿@model JohannesWebApplication.Models.OrderModel
+﻿@using Microsoft.AspNetCore.Identity
+@model JohannesWebApplication.Models.OrderModel
 
 @{
     ViewData["Title"] = "Details";
@@ -53,16 +54,62 @@
         <dd class="col-sm-10">
             @Html.DisplayFor(model => model.Commisioner.UserName)
         </dd>
-
+        @if ((string?) ViewData["HasExecutioner"] == "True")
+        {
+            <dt class="col-sm-2">
+                @Html.DisplayNameFor(model => model.CommisionExecutioner)
+            </dt>
+            <dd class="col-sm-10">
+                @Html.DisplayFor(model => model.CommisionExecutioner.UserName)
+            </dd>
+        }
     </dl>
 </div>
 <div>
     <a asp-action="Edit" asp-route-id="@Model?.OrderId">Edit</a> |
     <a asp-action="Index">Back to List</a>
-    @if ((string?) ViewData["CanTakePrinter"] == "True")
-        {
-            <form asp-controller="OrderModels" asp-route-id="@Model?.OrderId" asp-action="TakeOrder" method="post">
-                <button type="submit" value="Take comission"></button>
-            </form>
+    @if ((string?) ViewData["CanTakeCommision"] == "True")
+    {
+        <form asp-controller="OrderModels" asp-route-id="@Model?.OrderId" asp-action="TakeOrder" method="post">
+            <button type="submit" value="Take comission"></button>
+        </form>
+    }
+    @if ((string?) ViewData["DisplayPotentialExecutioners"] == "True")
+    {
+        <table class="table">
+            <thead>
+            <tr>
+                <th>
+                    Potenial Executioner
+                </th>
+            </tr>
+            </thead>
+            <tbody>
+        @foreach (var item in Model.PotentialExecutioners) {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.UserName)
+                </td>
+                <td>
+                    <form asp-controller="OrderModels" asp-route-id="@Model?.OrderId" asp-route-executionerid="@item.Id" asp-action="AcceptExecutioner" method="post">
+                        <button type="submit">Accept executioner</button>
+                    </form>
+                </td>
+            </tr>
         }
+            </tbody>
+        </table>
+    }
+    @if (((string?) ViewData["UserIsExecutioner"] == "True")&&((string?) ViewData["OrderSent"] != "True"))
+    {
+        <form asp-controller="OrderModels" asp-route-id="@Model?.OrderId" asp-action="ConfirmSendingOrder" method="post">
+            <button type="submit" value="Confirm sending ready order"></button>
+        </form>
+    }
+    @if (((string?) ViewData["OrderSent"] == "True")&&((string?) ViewData["UserIsCommisioner"] == "True"))
+    {
+        <form asp-controller="OrderModels" asp-route-id="@Model?.OrderId" asp-action="ConfirmFinalizingOrder" method="post">
+            <button type="submit" value="Confirm finalizing order"></button>
+        </form>
+    }
 </div>
