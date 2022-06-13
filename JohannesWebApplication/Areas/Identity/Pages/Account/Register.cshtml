@@ -1,11 +1,25 @@
 ﻿@page
 @model RegisterModel
 @{
-    ViewData["Title"] = "Register";
+    //ViewData["Title"] = "Register";
 }
 
 <h1>@ViewData["Title"]</h1>
-
+                <nav>
+                    <section class="menu_bar">
+                    <img src="/soruces/Johannes Logo.png">
+                    <section class="options">
+                        <div>
+                            <i class="about"></i>
+                            <a asp-area="Identity" asp-page="/Account"><img src="/soruces/How it works_.svg"></a>
+                        </div>
+                        <div>
+                            <i class="sign_in"></i>
+                            <a asp-area="Identity" asp-page="/Account/Login"><img src="/soruces/Sign in.svg"></a>
+                        </div>                   
+                    </section>
+                    </section>
+                </nav>
 <div class="row">
     <div class="col-md-4">
         <form id="registerForm" asp-route-returnUrl="@Model.ReturnUrl" method="post">

@@ -1,3 +1,67 @@
+@using Microsoft.AspNetCore.Identity
+@inject SignInManager<ApplicationUser> SignInManager
+@inject UserManager<ApplicationUser> UserManager
+
 @{
     Layout = "_Layout";
 }
+
+
+@if (SignInManager.IsSignedIn(User))
+{
+    <nav>
+        <section class="menu_bar">
+        <img src="/soruces/Johannes Logo.png">
+        <section class="options">
+            <div>
+                <i class="notifications"></i>
+                <a href="#" class="button"><img src="/soruces/Notifications.svg"></a>
+            </div>
+            <div class="menu_text_small">@User.Identity?.Name</div>
+            <div class="menu_text_small">
+            <form asp-area="Identity" asp-page="/Account/Logout" asp-route-returnUrl="@Url.Action("Index", "Home", new {area = ""})">
+            <button type="submit"><img src="/soruces/Logout.svg"></button>
+            </form>
+            </div>
+        </section>
+        </nav>
+        
+    }
+else
+    {
+        <nav>
+            <section class="menu_bar">
+                <img src="/soruces/Johannes Logo.png">
+                <section class="options">
+                    <div>
+                        <i class="about"></i>
+                        <a asp-area="Identity" asp-page="/Account"><img src="/soruces/How it works_.svg"></a>
+                    </div>
+                
+                    <div>
+                        <i class="sign_in"></i>
+                        <a asp-area="Identity" asp-page="/Account/Login"><img src="/soruces/Sign in.svg"></a>
+                    </div>
+                    <div>
+                        <i class="sign_up"></i>
+                        <a asp-area="Identity" asp-page="/Account/Register"><img src="/soruces/Sign up.svg"></a>
+                    </div>
+                </section>
+            </section>
+            </nav>
+    }
+
+ <main>
+            <section class="phrase">
+                
+                    <img src="/soruces/Johannes Icon.png">
+                    <img src="/soruces/get paid for 3d printing get your printing done.svg">
+            </section>
+            <section class="lorem_ipsum">
+                "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum."
+"Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo. Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur magni dolores eos qui ratione voluptatem sequi nesciunt. Neque porro quisquam est, qui dolorem ipsum quia dolor sit amet, consectetur, adipisci velit, sed quia non numquam eius modi tempora incidunt ut labore et dolore magnam aliquam quaerat voluptatem. Ut enim ad minima veniam, quis nostrum exercitationem ullam corporis suscipit laboriosam, nisi ut aliquid ex ea commodi consequatur? Quis autem vel eum iure reprehenderit qui in ea voluptate velit esse quam nihil molestiae consequatur, vel illum qui dolorem eum fugiat quo voluptas nulla pariatur?"
+            </section>
+        </main>
+
+
+
