@@ -9,6 +9,5 @@ public class MaterialModel
     
     public string Name { get; set; }
     
-    public PrinterMaterial Printer { get; set; }
     public OrderMaterial Order { get; set; }
 }

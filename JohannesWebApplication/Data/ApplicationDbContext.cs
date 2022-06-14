@@ -1,4 +1,5 @@
-﻿using JohannesWebApplication.Models;
+﻿using JohannesWebApplication.Data.Migrations;
+using JohannesWebApplication.Models;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 
@@ -22,5 +23,18 @@ public class ApplicationDbContext : IdentityDbContext<ApplicationUser>
         modelBuilder.Entity<ApplicationUser>()
             .HasMany(t => t.PrinterModel)
             .WithMany(t => t.ApplicationUsers);
+        modelBuilder.Entity<ApplicationUser>()
+            .HasMany(t => t.CommissionsPut)
+            .WithOne(t => t.Commisioner);
+        modelBuilder.Entity<ApplicationUser>()
+            .HasMany(t => t.CommissionsTaken)
+            .WithOne(t => t.CommisionExecutioner);
+        modelBuilder.Entity<ApplicationUser>()
+            .HasMany(t => t.PotentialCommisions)
+            .WithMany(t => t.PotentialExecutioners);
+        modelBuilder.Entity<ApplicationUser>()
+            .HasOne(t => t.Address)
+            .WithOne(t => t.ApplicationUser)
+            .HasForeignKey<AddressModel>(t => t.ApplicationUserForeignKey);
     }
 }

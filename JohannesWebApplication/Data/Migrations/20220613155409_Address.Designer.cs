@@ -3,6 +3,7 @@ using System;
 using JohannesWebApplication.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -10,9 +11,10 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace JohannesWebApplication.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20220613155409_Address")]
+    partial class Address
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder.HasAnnotation("ProductVersion", "6.0.5");
@@ -45,41 +47,6 @@ namespace JohannesWebApplication.Data.Migrations
                     b.HasIndex("PrinterModelPrinterID");
 
                     b.ToTable("ApplicationUserPrinterModel");
-                });
-
-            modelBuilder.Entity("JohannesWebApplication.Models.AddressModel", b =>
-                {
-                    b.Property<int>("AdressID")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("INTEGER");
-
-                    b.Property<int?>("ApartmentNumber")
-                        .HasColumnType("INTEGER");
-
-                    b.Property<string>("ApplicationUserForeignKey")
-                        .IsRequired()
-                        .HasColumnType("TEXT");
-
-                    b.Property<string>("City")
-                        .IsRequired()
-                        .HasColumnType("TEXT");
-
-                    b.Property<string>("PostalCode")
-                        .IsRequired()
-                        .HasColumnType("TEXT");
-
-                    b.Property<string>("Street")
-                        .HasColumnType("TEXT");
-
-                    b.Property<int>("StreetNumber")
-                        .HasColumnType("INTEGER");
-
-                    b.HasKey("AdressID");
-
-                    b.HasIndex("ApplicationUserForeignKey")
-                        .IsUnique();
-
-                    b.ToTable("AddressModel");
                 });
 
             modelBuilder.Entity("JohannesWebApplication.Models.ApplicationUser", b =>
@@ -421,17 +388,6 @@ namespace JohannesWebApplication.Data.Migrations
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("JohannesWebApplication.Models.AddressModel", b =>
-                {
-                    b.HasOne("JohannesWebApplication.Models.ApplicationUser", "ApplicationUser")
-                        .WithOne("Address")
-                        .HasForeignKey("JohannesWebApplication.Models.AddressModel", "ApplicationUserForeignKey")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("ApplicationUser");
-                });
-
             modelBuilder.Entity("JohannesWebApplication.Models.OrderMaterial", b =>
                 {
                     b.HasOne("JohannesWebApplication.Models.MaterialModel", "Material")
@@ -521,8 +477,6 @@ namespace JohannesWebApplication.Data.Migrations
 
             modelBuilder.Entity("JohannesWebApplication.Models.ApplicationUser", b =>
                 {
-                    b.Navigation("Address");
-
                     b.Navigation("CommissionsPut");
 
                     b.Navigation("CommissionsTaken");

@@ -1,4 +1,6 @@
-﻿@model JohannesWebApplication.Models.OrderModel
+﻿@using Microsoft.AspNetCore.Identity
+@using Microsoft.EntityFrameworkCore.Metadata.Internal
+@model JohannesWebApplication.Models.OrderModel
 
 @{
     ViewData["Title"] = "Details";
@@ -11,20 +13,146 @@
     <hr />
     <dl class="row">
         <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.Name)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.Name)
+        </dd>
+        
+        <dt class="col-sm-2">
             @Html.DisplayNameFor(model => model.Infill)
         </dt>
-        <dd class = "col-sm-10">
+        <dd class="col-sm-10">
             @Html.DisplayFor(model => model.Infill)
         </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.FilePath)
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.PrintFilePath)
         </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.FilePath)
+        <dd class="col-sm-10">
+            <a asp-action="DownloadFile" asp-route-id="@Model?.OrderId">Download File</a>
         </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.SizeX)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.SizeX)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.SizeY)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.SizeY)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.SizeZ)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.SizeZ)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Commisioner)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Commisioner.UserName)
+        </dd>
+        @if (Model.Commisioner.Address != null)
+        {
+            <dt class="col-sm-2">
+                @Html.DisplayNameFor(model => model.Commisioner.Address.City)
+            </dt>
+            <dd class="col-sm-10">
+                @Html.DisplayFor(model => model.Commisioner.Address.City)
+            </dd>
+        }
+        @if ((string?) ViewData["HasExecutioner"] == "True")
+        {
+            <dt class="col-sm-2">
+                @Html.DisplayNameFor(model => model.CommisionExecutioner)
+            </dt>
+            <dd class="col-sm-10">
+                @Html.DisplayFor(model => model.CommisionExecutioner.UserName)
+            </dd>
+        }
+        @if ((string?) ViewData["UserIsExecutioner"] == "True")
+        {
+            <dt class="col-sm-2">
+                @Html.DisplayNameFor(model => model.Commisioner.Address.City)
+            </dt>
+            <dd class="col-sm-10">
+                @Html.DisplayFor(model => model.Commisioner.Address.City)
+            </dd>
+            <dt class="col-sm-2">
+                @Html.DisplayNameFor(model => model.Commisioner.Address.Street)
+            </dt>
+            <dd class="col-sm-10">
+                @Html.DisplayFor(model => model.Commisioner.Address.Street)
+            </dd>
+            <dt class="col-sm-2">
+                @Html.DisplayNameFor(model => model.Commisioner.Address.StreetNumber)
+            </dt>
+            <dd class="col-sm-10">
+                @Html.DisplayFor(model => model.Commisioner.Address.StreetNumber)
+            </dd>
+            <dt class="col-sm-2">
+                @Html.DisplayNameFor(model => model.Commisioner.Address.ApartmentNumber)
+            </dt>
+            <dd class="col-sm-10">
+                @Html.DisplayFor(model => model.Commisioner.Address.ApartmentNumber)
+            </dd>
+            <dt class="col-sm-2">
+                @Html.DisplayNameFor(model => model.Commisioner.Address.PostalCode)
+            </dt>
+            <dd class="col-sm-10">
+                @Html.DisplayFor(model => model.Commisioner.Address.PostalCode)
+            </dd>
+        }
     </dl>
 </div>
 <div>
-    <a asp-action="Edit" asp-route-id="@Model?.PrinterID">Edit</a> |
+    <a asp-action="Edit" asp-route-id="@Model?.OrderId">Edit</a> |
     <a asp-action="Index">Back to List</a>
+    @if ((string?) ViewData["CanTakeCommision"] == "True")
+    {
+        <form asp-controller="OrderModels" asp-route-id="@Model?.OrderId" asp-action="TakeOrder" method="post">
+            <button type="submit" value="Take comission"></button>
+        </form>
+    }
+    @if ((string?) ViewData["DisplayPotentialExecutioners"] == "True")
+    {
+        <table class="table">
+            <thead>
+            <tr>
+                <th>
+                    Potenial Executioner
+                </th>
+            </tr>
+            </thead>
+            <tbody>
+        @foreach (var item in Model.PotentialExecutioners) {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.UserName)
+                </td>
+                <td>
+                    <form asp-controller="OrderModels" asp-route-id="@Model?.OrderId" asp-route-executionerid="@item.Id" asp-action="AcceptExecutioner" method="post">
+                        <button type="submit">Accept executioner</button>
+                    </form>
+                </td>
+            </tr>
+        }
+            </tbody>
+        </table>
+    }
+    @if (((string?) ViewData["UserIsExecutioner"] == "True")&&((string?) ViewData["OrderSent"] != "True"))
+    {
+        <form asp-controller="OrderModels" asp-route-id="@Model?.OrderId" asp-action="ConfirmSendingOrder" method="post">
+            <button type="submit" value="Confirm sending ready order"></button>
+        </form>
+    }
+    @if (((string?) ViewData["OrderSent"] == "True")&&((string?) ViewData["UserIsCommisioner"] == "True"))
+    {
+        <form asp-controller="OrderModels" asp-route-id="@Model?.OrderId" asp-action="ConfirmFinalizingOrder" method="post">
+            <button type="submit" value="Confirm finalizing order"></button>
+        </form>
+    }
 </div>

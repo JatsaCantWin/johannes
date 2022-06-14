@@ -24,10 +24,19 @@ namespace JohannesWebApplication.Controllers
         }
 
         // GET: PrinterModels
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(int? id)
         {
+            var printerList = await _context.Printers
+                .Include("ApplicationUsers")
+                .ToListAsync();
+            var applicationUser = await _userManager.GetUserAsync(HttpContext.User);
+            if (id == 1)
+                printerList.RemoveAll(p => p.ApplicationUsers.Contains(applicationUser));
+            ViewData["Id"] = id.ToString();
+            if (id == null)
+                ViewData["Id"] = "0";
               return _context.Printers != null ? 
-                          View(await _context.Printers.ToListAsync()) :
+                          View(printerList) :
                           Problem("Entity set 'ApplicationDbContext.Printers'  is null.");
         }
 
@@ -38,14 +47,19 @@ namespace JohannesWebApplication.Controllers
             {
                 return NotFound();
             }
-
+            
             var printerModel = await _context.Printers
-                .FirstOrDefaultAsync(m => m.PrinterID == id);
+                .Include("ApplicationUsers").FirstOrDefaultAsync(m => m.PrinterID == id);
             if (printerModel == null)
             {
                 return NotFound();
             }
 
+            var applicationUser = await _userManager.GetUserAsync(HttpContext.User);
+            
+            if (printerModel.ApplicationUsers.Contains(applicationUser))
+                ViewData["PrinterAdded"] = "True";
+            
             return View(printerModel);
         }
 
@@ -173,15 +187,28 @@ namespace JohannesWebApplication.Controllers
             var applicationUser = await _userManager.GetUserAsync(HttpContext.User);
             
             applicationUser.PrinterModel.Add(printerModel);
+            printerModel.ApplicationUsers.Add(applicationUser);
             
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
 
-        public bool CurrentUserHasPrinter(PrinterModel model)
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> RemovePrinter(int id)
         {
-            var applicationUser = _userManager.GetUserId(HttpContext.User); 
-            return (_context.Printers?.Find(model.PrinterID) == null);
+            var printerModel = await _context.Printers
+                .Include("ApplicationUsers")
+                .FirstOrDefaultAsync(m => m.PrinterID == id);
+            var applicationUser = await _userManager.GetUserAsync(HttpContext.User);
+            var applicationUserDb = await _context.ApplicationUsers
+                .Include("PrinterModel")
+                .FirstOrDefaultAsync(u => u.Id == applicationUser.Id);
+            
+            applicationUserDb.PrinterModel.Remove(printerModel);
+            printerModel.ApplicationUsers.Remove(applicationUserDb);
+            
+            await _context.SaveChangesAsync();
+            return RedirectToAction(nameof(Index));
         }
     }
 }
