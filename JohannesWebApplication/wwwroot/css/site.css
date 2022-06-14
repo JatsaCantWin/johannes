@@ -90,6 +90,9 @@ ul{
 .row{
   margin-left: 15%;
   margin-right: 15%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
   margin-top: 15%;
   font-family: 'Jura';
   font-style: normal;
@@ -98,6 +101,13 @@ ul{
   line-height: 35px;
 
   color: #FFFFFF;
+}
+
+.row_row{
+  display: flex;
+  flex-direction: row;
+  border-color: #51585e;
+  border: 1px;
 }
 
 .account{

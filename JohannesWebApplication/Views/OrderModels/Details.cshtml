@@ -146,13 +146,13 @@
     @if (((string?) ViewData["UserIsExecutioner"] == "True")&&((string?) ViewData["OrderSent"] != "True"))
     {
         <form asp-controller="OrderModels" asp-route-id="@Model?.OrderId" asp-action="ConfirmSendingOrder" method="post">
-            <button type="submit" value="Confirm sending ready order"></button>
+            <button type="submit" value="Confirm sending ready order"><img src="Johannes Icon.png"/></button>
         </form>
     }
     @if (((string?) ViewData["OrderSent"] == "True")&&((string?) ViewData["UserIsCommisioner"] == "True"))
     {
         <form asp-controller="OrderModels" asp-route-id="@Model?.OrderId" asp-action="ConfirmFinalizingOrder" method="post">
-            <button type="submit" value="Confirm finalizing order"></button>
+            <button type="submit" value="Confirm finalizing order"><img src="Johannes Icon.png"/></button>
         </form>
     }
 </div>
