@@ -1,3 +1,56 @@
+@using Microsoft.AspNetCore.Identity
+@inject SignInManager<ApplicationUser> SignInManager
+@inject UserManager<ApplicationUser> UserManager
+
 @{
     Layout = "_Layout";
 }
+
+
+@if (SignInManager.IsSignedIn(User))
+{
+    <nav>
+        <section class="menu_bar">
+        <img src="/soruces/Johannes Logo.png">
+        <section class="options">
+            <div>
+                <i class="notifications"></i>
+                <a href="#" class="button"><img src="/soruces/Notifications.svg"></a>
+            </div>
+            <div class="menu_text_small">@User.Identity?.Name</div>
+            <div class="menu_text_small">
+            <form asp-area="Identity" asp-page="/Account/Logout" asp-route-returnUrl="@Url.Action("Index", "Home", new {area = ""})">
+            <button type="submit"><img src="/soruces/Logout.svg"></button>
+            </form>
+            </div>
+        </section>
+        </nav>
+        
+    }
+else
+    {
+        <nav>
+            <section class="menu_bar">
+                <img src="/soruces/Johannes Logo.png">
+                <section class="options">
+                    <div>
+                        <i class="about"></i>
+                        <a asp-area="Identity" asp-page="/Account"><img src="/soruces/How it works_.svg"></a>
+                    </div>
+                
+                    <div>
+                        <i class="sign_in"></i>
+                        <a asp-area="Identity" asp-page="/Account/Login"><img src="/soruces/Sign in.svg"></a>
+                    </div>
+                    <div>
+                        <i class="sign_up"></i>
+                        <a asp-area="Identity" asp-page="/Account/Register"><img src="/soruces/Sign up.svg"></a>
+                    </div>
+                </section>
+            </section>
+            </nav>
+    }
+
+
+
+
