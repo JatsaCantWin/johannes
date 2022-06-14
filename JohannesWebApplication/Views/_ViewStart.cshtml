@@ -16,32 +16,32 @@
             @if (SignInManager.IsSignedIn(User))
             {
                 <i class="notifications"></i>
-                <a asp-area="Identity" asp-page="/Account"><img src="/soruces/Notifications.svg"></a>
+                <a asp-area="Identity" asp-page="/Account" class="menu_text">Notifications</a>
                 <div class="menu_text_small">@User.Identity?.Name</div>
                 <div class="menu_text_small">
-            <form asp-area="Identity" asp-page="/Account/Logout" asp-route-returnUrl="@Url.Action("Index", "Home", new { area = "" })">
-                <button type="submit"><img src="/soruces/Logout.svg"></button>
-            </form>
-            </div>
+                    <form asp-area="Identity" asp-page="/Account/Logout" asp-route-returnUrl="@Url.Action("Index", "Home", new { area = "" })">
+                        <button type="submit" class="menu_text">Logout</button>
+                    </form>
+                </div>
             }
             else
             {
                 <div>
                     <i class="about"></i>
-                    <a asp-area="Identity" asp-page="/Account/Login"><img src="/soruces/How it works_.svg"></a>
+                    <a asp-area="Identity" asp-page="/Account/Login" class="menu_text">How it works</a>
                 </div>
                 @if ((string?)ViewData["Title"] != "Log in")
                 {
                     <div>
                         <i class="sign_in"></i>
-                        <a asp-area="Identity" asp-page="/Account/Login"><img src="/soruces/Sign in.svg"></a>
+                        <a asp-area="Identity" asp-page="/Account/Login" class="menu_text">Sign in</a>
                     </div>
                 }
                 @if( (string?)ViewData["Title"] != "Register")
                 {
                     <div>
                         <i class="sign_up"></i>
-                        <a asp-area="Identity" asp-page="/Account/Register"><img src="/soruces/Sign up.svg"></a>
+                        <a asp-area="Identity" asp-page="/Account/Register" class="menu_text">Sign up</a>
                     </div>
                 }
             }
