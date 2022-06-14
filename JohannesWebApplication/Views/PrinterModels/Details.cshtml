@@ -8,7 +8,7 @@
 
 <h1>Details</h1>
 
-<div>
+<div class="row">
     <h4>PrinterModel</h4>
     <hr />
     <dl class="row">
@@ -43,10 +43,12 @@
             @Html.DisplayFor(model => model.Description)
         </dd>
     </dl>
+    <div class="row">
+        <a asp-action="Edit" asp-route-id="@Model?.PrinterID" class="menu_text_small">Edit</a>
+        <a asp-action="Index" class="menu_text_small">Back to List</a>
+        </div>
 </div>
 <div>
-    <a asp-action="Edit" asp-route-id="@Model?.PrinterID">Edit</a> |
-    <a asp-action="Index">Back to List</a> |
     @if ((string?) ViewData["PrinterAdded"] != "True")
     {
         <form asp-controller="PrinterModels" asp-route-id="@Model?.PrinterID" asp-action="AddPrinter" method="post">
