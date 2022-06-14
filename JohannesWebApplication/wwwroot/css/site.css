@@ -105,9 +105,21 @@ ul{
 
 .row_row{
   display: flex;
+  margin: 60px;
   flex-direction: row;
+  align-items: center;
+  justify-content: space-around;
   border-color: #51585e;
-  border: 1px;
+  border: 3px;
+  font-family: 'Jost';
+  font-style: normal;
+  font-weight: 500;
+  font-size: 30px;
+  line-height: 51px;
+
+  color: #E5E5E5;
+
+  text-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
 }
 
 .account{
