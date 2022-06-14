@@ -12,102 +12,103 @@
     <h4>OrderModel</h4>
     <hr />
     <dl class="row">
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Name)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Name)
-        </dd>
+            <dt class = "col-sm-2">
+                @Html.DisplayNameFor(model => model.Name)
+            </dt>
+            <dd class = "col-sm-10">
+                @Html.DisplayFor(model => model.Name)
+            </dd>
         
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.Infill)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.Infill)
-        </dd>
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.PrintFilePath)
-        </dt>
-        <dd class="col-sm-10">
-            <a asp-action="DownloadFile" asp-route-id="@Model?.OrderId">Download File</a>
-        </dd>
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.SizeX)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.SizeX)
-        </dd>
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.SizeY)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.SizeY)
-        </dd>
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.SizeZ)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.SizeZ)
-        </dd>
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.Commisioner)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.Commisioner.UserName)
-        </dd>
-        @if (Model.Commisioner.Address != null)
-        {
             <dt class="col-sm-2">
-                @Html.DisplayNameFor(model => model.Commisioner.Address.City)
+                @Html.DisplayNameFor(model => model.Infill)
             </dt>
             <dd class="col-sm-10">
-                @Html.DisplayFor(model => model.Commisioner.Address.City)
-            </dd>
-        }
-        @if ((string?) ViewData["HasExecutioner"] == "True")
-        {
-            <dt class="col-sm-2">
-                @Html.DisplayNameFor(model => model.CommisionExecutioner)
-            </dt>
-            <dd class="col-sm-10">
-                @Html.DisplayFor(model => model.CommisionExecutioner.UserName)
-            </dd>
-        }
-        @if ((string?) ViewData["UserIsExecutioner"] == "True")
-        {
-            <dt class="col-sm-2">
-                @Html.DisplayNameFor(model => model.Commisioner.Address.City)
-            </dt>
-            <dd class="col-sm-10">
-                @Html.DisplayFor(model => model.Commisioner.Address.City)
+                @Html.DisplayFor(model => model.Infill)
             </dd>
             <dt class="col-sm-2">
-                @Html.DisplayNameFor(model => model.Commisioner.Address.Street)
+                @Html.DisplayNameFor(model => model.PrintFilePath)
             </dt>
             <dd class="col-sm-10">
-                @Html.DisplayFor(model => model.Commisioner.Address.Street)
+                <a asp-action="DownloadFile" asp-route-id="@Model?.OrderId">Download File</a>
             </dd>
             <dt class="col-sm-2">
-                @Html.DisplayNameFor(model => model.Commisioner.Address.StreetNumber)
+                @Html.DisplayNameFor(model => model.SizeX)
             </dt>
             <dd class="col-sm-10">
-                @Html.DisplayFor(model => model.Commisioner.Address.StreetNumber)
+                @Html.DisplayFor(model => model.SizeX)
             </dd>
             <dt class="col-sm-2">
-                @Html.DisplayNameFor(model => model.Commisioner.Address.ApartmentNumber)
+                @Html.DisplayNameFor(model => model.SizeY)
             </dt>
             <dd class="col-sm-10">
-                @Html.DisplayFor(model => model.Commisioner.Address.ApartmentNumber)
+                @Html.DisplayFor(model => model.SizeY)
             </dd>
             <dt class="col-sm-2">
-                @Html.DisplayNameFor(model => model.Commisioner.Address.PostalCode)
+                @Html.DisplayNameFor(model => model.SizeZ)
             </dt>
             <dd class="col-sm-10">
-                @Html.DisplayFor(model => model.Commisioner.Address.PostalCode)
+                @Html.DisplayFor(model => model.SizeZ)
             </dd>
-        }
-    </dl>
+            <dt class="col-sm-2">
+                @Html.DisplayNameFor(model => model.Commisioner)
+            </dt>
+            <dd class="col-sm-10">
+                @Html.DisplayFor(model => model.Commisioner.UserName)
+            </dd>
+            @if (Model.Commisioner.Address != null)
+            {
+                <dt class="col-sm-2">
+                    @Html.DisplayNameFor(model => model.Commisioner.Address.City)
+                </dt>
+                <dd class="col-sm-10">
+                    @Html.DisplayFor(model => model.Commisioner.Address.City)
+                </dd>
+            }
+            @if ((string?) ViewData["HasExecutioner"] == "True")
+            {
+                <dt class="col-sm-2">
+                    @Html.DisplayNameFor(model => model.CommisionExecutioner)
+                </dt>
+                <dd class="col-sm-10">
+                    @Html.DisplayFor(model => model.CommisionExecutioner.UserName)
+                </dd>
+            }
+            @if ((string?) ViewData["UserIsExecutioner"] == "True")
+            {
+                <dt class="col-sm-2">
+                    @Html.DisplayNameFor(model => model.Commisioner.Address.City)
+                </dt>
+                <dd class="col-sm-10">
+                    @Html.DisplayFor(model => model.Commisioner.Address.City)
+                </dd>
+                <dt class="col-sm-2">
+                    @Html.DisplayNameFor(model => model.Commisioner.Address.Street)
+                </dt>
+                <dd class="col-sm-10">
+                    @Html.DisplayFor(model => model.Commisioner.Address.Street)
+                </dd>
+                <dt class="col-sm-2">
+                    @Html.DisplayNameFor(model => model.Commisioner.Address.StreetNumber)
+                </dt>
+                <dd class="col-sm-10">
+                    @Html.DisplayFor(model => model.Commisioner.Address.StreetNumber)
+                </dd>
+                <dt class="col-sm-2">
+                    @Html.DisplayNameFor(model => model.Commisioner.Address.ApartmentNumber)
+                </dt>
+                <dd class="col-sm-10">
+                    @Html.DisplayFor(model => model.Commisioner.Address.ApartmentNumber)
+                </dd>
+                <dt class="col-sm-2">
+                    @Html.DisplayNameFor(model => model.Commisioner.Address.PostalCode)
+                </dt>
+                <dd class="col-sm-10">
+                    @Html.DisplayFor(model => model.Commisioner.Address.PostalCode)
+                </dd>
+            }
+        </dl>
 </div>
+    </div>
 <div>
     <a asp-action="Edit" asp-route-id="@Model?.OrderId">Edit</a> |
     <a asp-action="Index">Back to List</a>

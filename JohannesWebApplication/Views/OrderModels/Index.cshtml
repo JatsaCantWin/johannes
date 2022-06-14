@@ -6,19 +6,19 @@
 
 <h1>Index</h1>
 
-<p>
+<p class="row_row">
     <a asp-action="Create">Create New</a>
     @if (ViewData["Id"] != "0")
     {
-        <a asp-action="Index" asp-route-id="0">Show all active offers</a>
+        <a asp-action="Index" asp-route-id="0" class="menu_text">Show all active offers</a>
     }
     @if (ViewData["Id"] != "1")
     {
-        <a asp-action="Index" asp-route-id="1">Show only offers from your city</a>
+        <a asp-action="Index" asp-route-id="1" class="menu_text">Show only offers from your city</a>
     }
     @if (ViewData["Id"] != "2")
     {
-        <a asp-action="Index" asp-route-id="2">Show all offers</a>
+        <a asp-action="Index" asp-route-id="2" class="menu_text">Show all offers</a>
     }
 </p>
 <table class="table">
