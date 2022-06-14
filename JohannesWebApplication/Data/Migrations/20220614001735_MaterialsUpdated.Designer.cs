@@ -3,6 +3,7 @@ using System;
 using JohannesWebApplication.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -10,9 +11,10 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace JohannesWebApplication.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20220614001735_MaterialsUpdated")]
+    partial class MaterialsUpdated
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder.HasAnnotation("ProductVersion", "6.0.5");
@@ -177,6 +179,9 @@ namespace JohannesWebApplication.Data.Migrations
                     b.Property<float>("Infill")
                         .HasColumnType("REAL");
 
+                    b.Property<int>("MaterialModelMaterialID")
+                        .HasColumnType("INTEGER");
+
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasColumnType("TEXT");
@@ -206,6 +211,8 @@ namespace JohannesWebApplication.Data.Migrations
 
                     b.HasIndex("CommisionerId");
 
+                    b.HasIndex("MaterialModelMaterialID");
+
                     b.ToTable("Orders");
                 });
 
@@ -234,6 +241,21 @@ namespace JohannesWebApplication.Data.Migrations
                     b.HasKey("PrinterID");
 
                     b.ToTable("Printers");
+                });
+
+            modelBuilder.Entity("MaterialModelPrinterModel", b =>
+                {
+                    b.Property<int>("PrintersPrinterID")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<int>("SupportedMaterialsMaterialID")
+                        .HasColumnType("INTEGER");
+
+                    b.HasKey("PrintersPrinterID", "SupportedMaterialsMaterialID");
+
+                    b.HasIndex("SupportedMaterialsMaterialID");
+
+                    b.ToTable("MaterialModelPrinterModel");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole", b =>
@@ -421,9 +443,32 @@ namespace JohannesWebApplication.Data.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
+                    b.HasOne("JohannesWebApplication.Models.MaterialModel", "MaterialModel")
+                        .WithMany("OrderModels")
+                        .HasForeignKey("MaterialModelMaterialID")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
                     b.Navigation("CommisionExecutioner");
 
                     b.Navigation("Commisioner");
+
+                    b.Navigation("MaterialModel");
+                });
+
+            modelBuilder.Entity("MaterialModelPrinterModel", b =>
+                {
+                    b.HasOne("JohannesWebApplication.Models.PrinterModel", null)
+                        .WithMany()
+                        .HasForeignKey("PrintersPrinterID")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("JohannesWebApplication.Models.MaterialModel", null)
+                        .WithMany()
+                        .HasForeignKey("SupportedMaterialsMaterialID")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
@@ -484,6 +529,11 @@ namespace JohannesWebApplication.Data.Migrations
                     b.Navigation("CommissionsPut");
 
                     b.Navigation("CommissionsTaken");
+                });
+
+            modelBuilder.Entity("JohannesWebApplication.Models.MaterialModel", b =>
+                {
+                    b.Navigation("OrderModels");
                 });
 #pragma warning restore 612, 618
         }
