@@ -27,8 +27,7 @@ public class OrderModel
     public ApplicationUser Commisioner { get; set; }
     public ApplicationUser? CommisionExecutioner { get; set; }
     public ICollection<ApplicationUser> PotentialExecutioners { get; set; }
-
-    public OrderMaterial Material { get; set; }
+    //public MaterialModel? MaterialModel { get; set; }
 }
 
 public class OrderModelVM

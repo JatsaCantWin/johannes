@@ -36,5 +36,11 @@ public class ApplicationDbContext : IdentityDbContext<ApplicationUser>
             .HasOne(t => t.Address)
             .WithOne(t => t.ApplicationUser)
             .HasForeignKey<AddressModel>(t => t.ApplicationUserForeignKey);
+        //modelBuilder.Entity<PrinterModel>()
+        //    .HasMany(t => t.SupportedMaterials)
+        //    .WithMany(t => t.Printers);
+        //modelBuilder.Entity<OrderModel>()
+        //    .HasOne(t => t.MaterialModel)
+        //    .WithMany(t => t.OrderModels);
     }
 }

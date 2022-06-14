@@ -31,7 +31,7 @@ namespace JohannesWebApplication.Controllers
                 .ToListAsync();
             var applicationUser = await _userManager.GetUserAsync(HttpContext.User);
             if (id == 1)
-                printerList.RemoveAll(p => p.ApplicationUsers.Contains(applicationUser));
+                printerList.RemoveAll(p => !p.ApplicationUsers.Contains(applicationUser));
             ViewData["Id"] = id.ToString();
             if (id == null)
                 ViewData["Id"] = "0";

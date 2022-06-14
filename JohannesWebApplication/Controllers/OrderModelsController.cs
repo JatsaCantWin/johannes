@@ -254,7 +254,7 @@ namespace JohannesWebApplication.Controllers
                 (orderModel.CommisionExecutioner == applicationUser)||
                 (orderModel.PotentialExecutioners.Contains(applicationUser)))
                 return false;
-            foreach (PrinterModel printer in applicationUser.PrinterModel)
+            foreach (PrinterModel printer in applicationUserDatabase.PrinterModel)
             {
                 if ((printer.SizeX >= orderModel.SizeX) &&
                     (printer.SizeY >= orderModel.SizeY) &&

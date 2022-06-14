@@ -149,7 +149,9 @@
             <button type="submit" value="Confirm sending ready order"></button>
         </form>
     }
-    @if (((string?) ViewData["OrderSent"] == "True")&&((string?) ViewData["UserIsCommisioner"] == "True"))
+    @if (((string?) ViewData["OrderSent"] == "True")&&
+         ((string?) ViewData["UserIsCommisioner"] == "True")&&
+         (!Model.OrderFinalized))
     {
         <form asp-controller="OrderModels" asp-route-id="@Model?.OrderId" asp-action="ConfirmFinalizingOrder" method="post">
             <button type="submit" value="Confirm finalizing order"></button>
