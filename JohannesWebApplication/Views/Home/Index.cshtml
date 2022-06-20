@@ -6,30 +6,30 @@
     ViewData["Title"] = "Home Page";
 }
 
- <main>
-            <section class="phrase">
-                
-                    <img src="/soruces/Johannes Icon.png">
-                    <img src="/soruces/get paid for 3d printing get your printing done.svg">
-            </section>
-            <section class="lorem_ipsum">
-                "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum."
-"Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo. Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur magni dolores eos qui ratione voluptatem sequi nesciunt. Neque porro quisquam est, qui dolorem ipsum quia dolor sit amet, consectetur, adipisci velit, sed quia non numquam eius modi tempora incidunt ut labore et dolore magnam aliquam quaerat voluptatem. Ut enim ad minima veniam, quis nostrum exercitationem ullam corporis suscipit laboriosam, nisi ut aliquid ex ea commodi consequatur? Quis autem vel eum iure reprehenderit qui in ea voluptate velit esse quam nihil molestiae consequatur, vel illum qui dolorem eum fugiat quo voluptas nulla pariatur?"
-            </section>
-        </main>
-
 <div class="row_row">
-    <a asp-area="Identity" asp-page="/Account/Login">Login</a>
-    <a asp-area="Identity" asp-page="/Account/Register">Register</a>
+    <a asp-area="Identity" asp-page="/Account/Login" class="menu_text">Login</a>
+    <a asp-area="Identity" asp-page="/Account/Register" class="menu_text">Register</a>
     @if (SignInManager.IsSignedIn(User))
     {
         @User.Identity?.Name
-        <form asp-area="Identity" asp-page="/Account/Logout" asp-route-returnUrl="@Url.Action("Index", "Home", new {area = ""})">
-            <button type="submit">Logout</button>
+        <form asp-area="Identity" asp-page="/Account/Logout" class="menu_text" asp-route-returnUrl="@Url.Action("Index", "Home", new {area = ""})">
+            <button type="submit" class="menu_text">Logout</button>
         </form>
-        <a asp-controller="OrderModels" asp-action="Index">Orders</a>
-        <a asp-controller="PrinterModels" asp-action="Index">Printers</a>
-        <a asp-controller="Address" asp-action="Index">Address</a>
+        <a asp-controller="OrderModels" asp-action="Index" class="menu_text">Orders</a>
+        <a asp-controller="PrinterModels" asp-action="Index" class="menu_text">Printers</a>
+        <a asp-controller="Address" asp-action="Index" class="menu_text">Address</a>
     }
-
 </div>
+
+<main>
+    <section class="phrase">
+                
+        <img src="/soruces/Johannes Icon.png">
+        <img src="/soruces/get paid for 3d printing get your printing done.svg">
+    </section>
+    <section class="lorem_ipsum">
+                
+        Johannes 3D is a platform that allows you to associate owners of 3d printers and people who need printing services at a low price, the platform is intended for small home applications
+        if you’ve decided it’s a good idea to buy your own 3D printer, you may be overwhelmed by the range of choices now available. To help people make sense of the 3D printer market, we reached out to our entire customer base and our global network of 3D printing service providers to find out about the 3D printers they own and their experiences in using them.
+        </section>
+</main>

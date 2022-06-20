@@ -9,44 +9,45 @@
 <link rel="shortcut icon" type="image/png" href="Johannes Icon.png">
 
 
-    <nav>
-        <section class="menu_bar">
-        <img src="/soruces/Johannes Logo.png">
-        <section class="options">
-            @if (SignInManager.IsSignedIn(User))
-            {
-                <i class="notifications"></i>
-                <a asp-area="Identity" asp-page="/Account" class="menu_text">Notifications</a>
-                <div class="menu_text_small">@User.Identity?.Name</div>
-                <div class="menu_text_small">
-                    <form asp-area="Identity" asp-page="/Account/Logout" asp-route-returnUrl="@Url.Action("Index", "Home", new { area = "" })">
-                        <button type="submit" class="menu_text">Logout</button>
-                    </form>
-                </div>
-            }
-            else
+<nav>
+    <section class="menu_bar">
+    <img src="/soruces/Johannes Logo.png">
+    <section class="options">
+        @if (SignInManager.IsSignedIn(User))
+        {
+            <i class="notifications"></i> <!-- asp-area="Identity" asp-page="/Account"-->
+            <a  href="#bottom" class="menu_text">Notifications</a>
+            <div class="menu_tex">@User.Identity?.Name</div>
+            <div class="menu_text">
+                <form asp-area="Identity" asp-page="/Account/Logout" class="menu_text" asp-route-returnUrl="@Url.Action("Index", "Home", new { area = "" })">
+                    <button type="submit" class="menu_text">Logout</button>
+                </form>
+            </div>
+        }
+        else
+        {
+            <div>
+                <i class="about"></i>
+                <a asp-area="Identity" asp-page="/Account/Login" class="menu_text">How it works</a>
+            </div>
+            @if ((string?)ViewData["Title"] != "Log in")
             {
                 <div>
-                    <i class="about"></i>
-                    <a asp-area="Identity" asp-page="/Account/Login" class="menu_text">How it works</a>
+                    <i class="sign_in"></i>
+                    <a asp-area="Identity" asp-page="/Account/Login" class="menu_text">Sign in</a>
                 </div>
-                @if ((string?)ViewData["Title"] != "Log in")
-                {
-                    <div>
-                        <i class="sign_in"></i>
-                        <a asp-area="Identity" asp-page="/Account/Login" class="menu_text">Sign in</a>
-                    </div>
-                }
-                @if( (string?)ViewData["Title"] != "Register")
-                {
-                    <div>
-                        <i class="sign_up"></i>
-                        <a asp-area="Identity" asp-page="/Account/Register" class="menu_text">Sign up</a>
-                    </div>
-                }
             }
-        </section>
-        </nav>
+            @if ((string?)ViewData["Title"] != "Register")
+            {
+                <div>
+                    <i class="sign_up"></i>
+                    <a asp-area="Identity" asp-page="/Account/Register" class="menu_text">Sign up</a>
+                </div>
+            }
+        }
+    </section>
+
+</nav>
 
 
 
