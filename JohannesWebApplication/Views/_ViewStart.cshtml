@@ -15,8 +15,8 @@
     <section class="options">
         @if (SignInManager.IsSignedIn(User))
         {
-            <i class="notifications"></i> <!-- asp-area="Identity" asp-page="/Account"-->
-            <a  href="#bottom" class="menu_text_small">Notifications</a>
+            <i class="notifications" ></i> <!-- asp-area="Identity" asp-page="/Account"-->
+            <a  asp-page="/Account/Home" class="menu_text_small" >Home</a>
 
             @User.Identity?.Name
             <form asp-area="Identity" asp-page="/Account/Logout" class="menu_text_small" asp-route-returnUrl="@Url.Action("Index", "Home", new {area = ""})">
