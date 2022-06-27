@@ -16,32 +16,34 @@
         @if (SignInManager.IsSignedIn(User))
         {
             <i class="notifications"></i> <!-- asp-area="Identity" asp-page="/Account"-->
-            <a  href="#bottom" class="menu_text">Notifications</a>
-            <div class="menu_tex">@User.Identity?.Name</div>
-            <div class="menu_text">
-                <form asp-area="Identity" asp-page="/Account/Logout" class="menu_text" asp-route-returnUrl="@Url.Action("Index", "Home", new { area = "" })">
-                    <button type="submit" class="menu_text">Logout</button>
-                </form>
-            </div>
+            <a  href="#bottom" class="menu_text_small">Notifications</a>
+
+            @User.Identity?.Name
+            <form asp-area="Identity" asp-page="/Account/Logout" class="menu_text_small" asp-route-returnUrl="@Url.Action("Index", "Home", new {area = ""})">
+                <button type="submit" class="menu_text_small">Logout</button>
+            </form>
+            <a asp-controller="OrderModels" asp-action="Index" class="menu_text_small">Orders</a>
+            <a asp-controller="PrinterModels" asp-action="Index" class="menu_text_small">Printers</a>
+            <a asp-controller="Address" asp-action="Index" class="menu_text_small">Address</a>
         }
         else
         {
             <div>
                 <i class="about"></i>
-                <a asp-area="Identity" asp-page="/Account/Login" class="menu_text">How it works</a>
+                <a asp-area="Identity" asp-page="/Account/Login" class="menu_text_small">How it works</a>
             </div>
             @if ((string?)ViewData["Title"] != "Log in")
             {
                 <div>
                     <i class="sign_in"></i>
-                    <a asp-area="Identity" asp-page="/Account/Login" class="menu_text">Sign in</a>
+                    <a asp-area="Identity" asp-page="/Account/Login" class="menu_text_small">Sign in</a>
                 </div>
             }
             @if ((string?)ViewData["Title"] != "Register")
             {
                 <div>
                     <i class="sign_up"></i>
-                    <a asp-area="Identity" asp-page="/Account/Register" class="menu_text">Sign up</a>
+                    <a asp-area="Identity" asp-page="/Account/Register" class="menu_text_small">Sign up</a>
                 </div>
             }
         }
