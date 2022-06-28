@@ -19,19 +19,19 @@
             @Html.DisplayFor(model => model.Name)
         </dd>
         <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.SizeX)
+            Width [mm]
         </dt>
         <dd class = "col-sm-10">
             @Html.DisplayFor(model => model.SizeX)
         </dd>
         <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.SizeY)
+            Height [mm]
         </dt>
         <dd class = "col-sm-10">
             @Html.DisplayFor(model => model.SizeY)
         </dd>
         <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.SizeZ)
+            Depth [mm]
         </dt>
         <dd class = "col-sm-10">
             @Html.DisplayFor(model => model.SizeZ)
@@ -46,7 +46,7 @@
     <div class="row">
         <a asp-action="Edit" asp-route-id="@Model?.PrinterID" class="menu_text_small">Edit</a>
         <a asp-action="Index" class="menu_text_small">Back to List</a>
-        </div>
+    </div>
 </div>
 <div>
     @if ((string?) ViewData["PrinterAdded"] != "True")

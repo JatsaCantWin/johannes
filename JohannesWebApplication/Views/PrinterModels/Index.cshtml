@@ -17,20 +17,20 @@
             <a asp-action="Index" asp-route-id="1" class="menu_text">Show your printers</a>
         }
 </p>
-<table class="table">
+<table class="table menu_text_small">
     <thead>
         <tr>
             <th>
                 @Html.DisplayNameFor(model => model.Name)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.SizeX)
+                Width [mm]
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.SizeY)
+                Height [mm]
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.SizeZ)
+                Depth [mm]
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.Description)

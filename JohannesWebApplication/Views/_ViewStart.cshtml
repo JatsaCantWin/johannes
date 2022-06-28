@@ -18,7 +18,7 @@
             <i class="notifications" ></i> <!-- asp-area="Identity" asp-page="/Account"-->
             <a  asp-page="/Account/Home" class="menu_text_small" >Home</a>
 
-            @User.Identity?.Name
+            <div class ="menu_text_small">@User.Identity?.Name</div>
             <form asp-area="Identity" asp-page="/Account/Logout" class="menu_text_small" asp-route-returnUrl="@Url.Action("Index", "Home", new {area = ""})">
                 <button type="submit" class="menu_text_small">Logout</button>
             </form>
@@ -30,7 +30,7 @@
         {
             <div>
                 <i class="about"></i>
-                <a asp-area="Identity" asp-page="/Account/Login" class="menu_text_small">How it works</a>
+                <a asp-area="Identity" asp-page="/" class="menu_text_small">How it works</a>
             </div>
             @if ((string?)ViewData["Title"] != "Log in")
             {
